@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Demo: Uploads using Ember.js and mOxie</title>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://builds.emberjs.com/handlebars-1.0.0.js"></script>
+<script src="http://builds.emberjs.com/tags/v1.4.0/ember.prod.js"></script>
+<script src="moxie.js"></script>
+<script src="jquery.mockjax.js"></script>
+
+<style>
+.attachments {
+  list-style: none;
+  padding-left: 0;
+}
+.error {
+  color: red;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+</style>
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="application">
+<h1>Demo: Uploads using Ember.js and mOxie</h1>
+
+{{outlet}}
+
+(read the tutorial: <a href="http://scribu.net/blog/cross-browser-uploads-ember-moxie.html">Cross-browser AJAX uploads using Ember.js and mOxie</a>)
+</script>
+
+<script type="text/x-handlebars" data-template-name="index">
+{{#each errors}}
+  <div class="error">Could not upload {{file}}: {{reason}}</div>
+{{/each}}
+
+{{#if uploading}}
+  <p>Uploaded {{completed}} / {{attachments.length}} files.
+{{else}}
+  <ul class="attachments">
+    {{#each attachments}}
+    <li>
+      <button title="Remove file" {{action 'removeFile' this}}>x</button>
+      {{name}}
+    </li>
+    {{/each}}
+  </ul>
+
+  {{#view App.FilePicker}}
+  <p>
+    <button>Select files to upload</button> (the files won't actually be uploaded anywhere)
+  </p>
+  {{/view}}
+
+  <p><button {{action 'submit'}}>Upload</button></p>
+{{/if}}
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>
